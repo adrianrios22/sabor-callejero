@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- =========================
+       CAMBIAR PARA CADA CLIENTE
+       ========================= -->
+  <title>Urban Burger | Restaurante</title>
+  <meta
+    name="description"
+    content="Hamburguesas artesanales, bebidas, entradas y mucho sabor."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800;900&family=Barlow+Condensed:ital,wght@0,800;0,900;1,900&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <style>
+
+    /* ========================================
+       VARIABLES DE LA PLANTILLA
+       CAMBIAR COLORES AQUÍ PARA OTRO CLIENTE
+       ======================================== */
+
+    :root {
+      --fondo: #090909;
+      --fondo-2: #111111;
+      --fondo-3: #171717;
+      --tarjeta: #191919;
+
+      --principal: #f2b51d;
+      --principal-claro: #ffd45c;
+
+      --texto: #ffffff;
+      --texto-gris: #b7b7b7;
+      --borde: #292929;
+
+      --radio: 20px;
+      --ancho: 1200px;
+    }
+
+    /* ========================================
+       BASE
+       ======================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html {
+      scroll-padding-top: 85px;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .contenedor {
+      width: min(92%, var(--ancho));
+      margin: auto;
+    }
+
+    section {
+      padding: 90px 0;
+    }
+
+    .mini-titulo {
+      color: var(--principal);
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .titulo-seccion {
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .titulo-seccion span {
+      color: var(--principal);
+    }
+
+    .texto-seccion {
+      color: var(--texto-gris);
+      max-width: 650px;
+      font-size: 17px;
+    }
+
+    .cabecera-seccion {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .cabecera-seccion .texto-seccion {
+      margin: auto;
+    }
+
+    /* ========================================
+       BOTONES
+       ======================================== */
+
+    .boton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 12px;
+      background: var(--principal);
+      color: #111;
+      font-weight: 900;
+      transition: .25s ease;
+    }
+
+    .boton:hover {
+      background: var(--principal-claro);
+      transform: translateY(-2px);
+    }
+
+    .boton-borde {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 12px;
+      border: 1px solid #555;
+      color: white;
+      font-weight: 800;
+      transition: .25s ease;
+    }
+
+    .boton-borde:hover {
+      border-color: var(--principal);
+      color: var(--principal);
+    }
+
+    /* ========================================
+       HEADER
+       ======================================== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8, 8, 8, .94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 23px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .logo-icono {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--principal);
+      color: #111;
+      font-size: 22px;
+    }
+
+    .logo span {
+      color: var(--principal);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav-links a {
+      transition: .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--principal);
+    }
+
+    .menu-movil {
+      display: none;
+      background: transparent;
+      color: white;
+      border: 0;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* ========================================
+       HERO
+       ======================================== */
+
+    .hero {
+      padding: 0;
+      min-height: 720px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0,0,0,.96) 0%,
+          rgba(0,0,0,.87) 38%,
+          rgba(0,0,0,.44) 67%,
+          rgba(0,0,0,.20) 100%
+        ),
+        url("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=85&w=1800&auto=format&fit=crop");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: rgba(242,181,29,.10);
+      filter: blur(100px);
+      right: -100px;
+      top: 60px;
+    }
+
+    .hero-contenido {
+      position: relative;
+      z-index: 2;
+      max-width: 660px;
+      padding: 100px 0;
+    }
+
+    .hero-etiqueta {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 14px;
+      margin-bottom: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,181,29,.35);
+      background: rgba(242,181,29,.08);
+      color: var(--principal);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      font-weight: 900;
+    }
+
+    .hero h1 {
+      font-size: clamp(54px, 8vw, 95px);
+      line-height: .91;
+      text-transform: uppercase;
+      letter-spacing: -4px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span {
+      color: var(--principal);
+    }
+
+    .hero p {
+      max-width: 570px;
+      color: #d1d1d1;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .hero-botones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    /* ========================================
+       BENEFICIOS
+       ======================================== */
+
+    .beneficios {
+      margin-top: -42px;
+      position: relative;
+      z-index: 20;
+    }
+
+    .beneficios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--fondo-2);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      overflow: hidden;
+      box-shadow: 0 25px 70px rgba(0,0,0,.35);
+    }
+
+    .beneficio {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 27px;
+      border-right: 1px solid var(--borde);
+    }
+
+    .beneficio:last-child {
+      border-right: 0;
+    }
+
+    .beneficio-icono {
+      font-size: 30px;
+    }
+
+    .beneficio h3 {
+      color: var(--principal);
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .beneficio p {
+      color: var(--texto-gris);
+      font-size: 13px;
+    }
+
+    /* ========================================
+       CATEGORÍAS
+       ======================================== */
+
+    .categorias-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .categoria {
+      min-height: 180px;
+      background:
+        linear-gradient(145deg, #191919, #111111);
+      border: 1px solid var(--borde);
+      border-radius: 18px;
+      padding: 28px 18px;
+      text-align: center;
+      transition: .25s;
+    }
+
+    .categoria:hover {
+      border-color: var(--principal);
+      transform: translateY(-6px);
+    }
+
+    .categoria-icono {
+      font-size: 48px;
+      margin-bottom: 14px;
+    }
+
+    .categoria h3 {
+      color: var(--principal);
+      text-transform: uppercase;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .categoria p {
+      color: var(--texto-gris);
+      font-size: 13px;
+    }
+
+    /* ========================================
+       PRODUCTOS
+       ======================================== */
+
+    .productos {
+      background: var(--fondo-2);
+    }
+
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .producto {
+      background: var(--tarjeta);
+      border: 1px solid var(--borde);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: .25s;
+    }
+
+    .producto:hover {
+      transform: translateY(-7px);
+      border-color: var(--principal);
+    }
+
+    .producto-imagen {
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .producto-imagen img {
+      height: 100%;
+      object-fit: cover;
+      transition: .35s;
+    }
+
+    .producto:hover img {
+      transform: scale(1.05);
+    }
+
+    .producto-info {
+      padding: 22px;
+    }
+
+    .producto-info h3 {
+      font-size: 20px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .producto-info p {
+      color: var(--texto-gris);
+      font-size: 14px;
+      min-height: 66px;
+    }
+
+    .producto-abajo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .precio {
+      color: var(--principal);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .etiqueta-producto {
+      color: #111;
+      background: var(--principal);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    /* ========================================
+       PROMOCIÓN
+       ======================================== */
+
+    .promo {
+      padding: 55px 0;
+    }
+
+    .promo-box {
+      background:
+        linear-gradient(120deg, #d89900, var(--principal), #ffd258);
+      color: #111;
+      border-radius: 25px;
+      padding: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      overflow: hidden;
+    }
+
+    .promo-box h2 {
+      font-size: clamp(38px, 6vw, 65px);
+      line-height: .93;
+      text-transform: uppercase;
+      margin: 8px 0 14px;
+    }
+
+    .promo-box p {
+      font-weight: 700;
+    }
+
+    .promo-icono {
+      font-size: 120px;
+      transform: rotate(-8deg);
+    }
+
+    /* ========================================
+       NOSOTROS
+       ======================================== */
+
+    .nosotros-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .nosotros-img {
+      position: relative;
+    }
+
+    .nosotros-img img {
+      height: 520px;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+
+    .nosotros-img::after {
+      content: "";
+      position: absolute;
+      inset: 16px -16px -16px 16px;
+      border: 2px solid var(--principal);
+      border-radius: 24px;
+      z-index: -1;
+    }
+
+    .nosotros-texto p {
+      color: var(--texto-gris);
+      margin-bottom: 22px;
+      font-size: 16px;
+    }
+
+    /* ========================================
+       INFORMACIÓN
+       ======================================== */
+
+    .info {
+      background: var(--fondo-2);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .info-card {
+      background: var(--tarjeta);
+      border: 1px solid var(--borde);
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .info-card .info-icono {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .info-card h3 {
+      color: var(--principal);
+      text-transform: uppercase;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .info-card p {
+      color: var(--texto-gris);
+    }
+
+    /* ========================================
+       REDES
+       ======================================== */
+
+    .redes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 35px;
+    }
+
+    .red-social {
+      padding: 22px;
+      border-radius: 16px;
+      background: #151515;
+      border: 1px solid var(--borde);
+      text-align: center;
+      font-weight: 900;
+      transition: .25s;
+    }
+
+    .red-social:hover {
+      border-color: var(--principal);
+      color: var(--principal);
+      transform: translateY(-4px);
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+
+    footer {
+      background: #050505;
+      padding: 65px 0 25px;
+      border-top: 1px solid var(--borde);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-col h3 {
+      color: var(--principal);
+      margin-bottom: 15px;
+    }
+
+    .footer-col p,
+    .footer-col a {
+      color: #909090;
+      font-size: 14px;
+      margin-bottom: 9px;
+      display: block;
+    }
+
+    .footer-col a:hover {
+      color: var(--principal);
+    }
+
+    .copyright {
+      margin-top: 45px;
+      padding-top: 20px;
+      border-top: 1px solid #1f1f1f;
+      color: #666;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* ========================================
+       WHATSAPP
+       ======================================== */
+
+    .whatsapp-flotante {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      background: #25d366;
+      color: white;
+      font-size: 27px;
+      font-weight: bold;
+      border-radius: 50%;
+      z-index: 900;
+      box-shadow: 0 15px 35px rgba(0,0,0,.40);
+      transition: .25s;
+    }
+
+    .whatsapp-flotante:hover {
+      transform: scale(1.07);
+    }
+
+    /* ========================================
+       RESPONSIVE TABLET
+       ======================================== */
+
+    @media (max-width: 950px) {
+
+      .nav-links {
+        position: absolute;
+        top: 78px;
+        left: 0;
+        right: 0;
+        background: #0b0b0b;
+        border-bottom: 1px solid var(--borde);
+        display: none;
+        flex-direction: column;
+        padding: 25px;
+      }
+
+      .nav-links.activo {
+        display: flex;
+      }
+
+      .menu-movil {
+        display: block;
+      }
+
+      .categorias-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .productos-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nosotros-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    /* ========================================
+       RESPONSIVE CELULAR
+       ======================================== */
+
+    @media (max-width: 620px) {
+
+      section {
+        padding: 70px 0;
+      }
+
+      .hero {
+        min-height: 660px;
+        background-position: 60% center;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            0deg,
+            rgba(0,0,0,.75),
+            transparent 45%
+          );
+      }
+
+      .hero-contenido {
+        padding: 80px 0;
+        z-index: 3;
+      }
+
+      .hero h1 {
+        font-size: 54px;
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .beneficios-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .beneficio {
+        border-right: 0;
+        border-bottom: 1px solid var(--borde);
+      }
+
+      .beneficio:last-child {
+        border-bottom: 0;
+      }
+
+      .categorias-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .productos-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .producto-imagen {
+        height: 230px;
+      }
+
+      .promo-box {
+        padding: 30px 24px;
+      }
+
+      .promo-icono {
+        display: none;
+      }
+
+      .nosotros-img img {
+        height: 380px;
+      }
+
+      .redes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+
+    /* =======================================================
+       MENÚ ESENCIAL - CAMBIAR COLORES EN :root AL INICIO
+       ======================================================= */
+    .menu-esencial {background: radial-gradient(ellipse at 15% 0%,rgba(242,181,29,.07),transparent 55%),var(--fondo-2);}
+    .menu-cabecera {margin-bottom:32px}
+    .categorias-pestanas {display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px;scroll-margin-top:100px}
+    .pestana-menu {cursor:pointer;display:flex;align-items:center;gap:9px;padding:13px 19px;border:1.5px solid #484848;border-radius:999px;background:#191919;color:#eee;font-weight:800;transition:border-color .25s,transform .25s,box-shadow .25s,background .25s}
+    .pestana-menu:hover {border-color:var(--principal);transform:translateY(-2px)}
+    .pestana-menu.activa {border-color:var(--principal);color:var(--principal);background:#24200e;box-shadow:0 0 0 1px var(--principal),0 0 20px rgba(242,181,29,.26)}
+    .menu-distribucion {display:grid;grid-template-columns:minmax(0,1fr) 345px;gap:26px;align-items:start}
+    .lista-productos {background:linear-gradient(150deg,#1c1c1c,#121212);border:1px solid #3a3a3a;border-radius:22px;padding:13px;min-width:0;perspective:1100px}
+    .plato-item {position:relative;padding:18px 18px;border-radius:15px;border:2px solid transparent;background:transparent;margin:3px 0;transition:transform .34s cubic-bezier(.2,.9,.2,1.1),box-shadow .34s,border-color .34s,background .34s;z-index:1}
+    .plato-item:not(:last-child):after {content:"";position:absolute;left:18px;right:18px;bottom:-4px;height:1px;background:#383838}
+    .plato-item:hover {border-color:#78621e;background:#25231c}
+    .plato-item.seleccionado {z-index:5;transform:translate3d(0,-6px,26px) scale(1.025);border-color:var(--principal);background:linear-gradient(110deg,#302713,#181818 65%);box-shadow:0 17px 0 -10px #9d720d,0 24px 38px #000b,0 0 25px rgba(242,181,29,.23)}
+    .plato-linea {display:flex;align-items:center;gap:14px;justify-content:space-between}
+    .plato-texto {min-width:0;flex:1}
+    .plato-texto h3 {font-size:19px;font-weight:900;margin-bottom:4px}
+    .plato-texto p {font-size:14px;line-height:1.5;color:#bdbdbd}
+    .plato-acciones {flex-shrink:0;display:flex;align-items:center;gap:13px}
+    .plato-precio {color:var(--principal);font-weight:900;font-size:19px;white-space:nowrap}
+    .elegir-plato,.sumar-plato {border:1px solid #777;border-radius:12px;padding:9px 13px;background:#111;color:white;font-weight:800;cursor:pointer;white-space:nowrap;transition:.2s}
+    .elegir-plato:hover,.plato-item.seleccionado .elegir-plato {background:var(--principal);border-color:var(--principal);color:#111}
+    .detalle-plato {display:none;margin-top:15px;padding-top:14px;border-top:1px solid #5b4a21;animation:aparecer .25s ease}
+    .plato-item.seleccionado .detalle-plato {display:block}
+    .detalle-plato label {display:block;font-size:13px;font-weight:700;color:#ddd;margin-bottom:7px}
+    .detalle-plato textarea {width:100%;min-height:55px;resize:vertical;padding:11px;background:#101010;border:1px solid #555;border-radius:9px;color:#fff;font:inherit}
+    .detalle-acciones {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
+    .sumar-plato {border-color:var(--principal);background:var(--principal);color:#111}
+    .sumar-plato:active {transform:scale(.96)}
+    @keyframes aparecer {from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+    /* Sticky: permanece visible en la columna al desplazarse por el menú */
+    .carrito-lateral {position:sticky;top:96px;border:1.5px solid var(--principal);border-radius:20px;background:rgba(15,15,15,.97);box-shadow:0 17px 35px #0008;overflow:hidden;max-height:calc(100vh - 112px);display:flex;flex-direction:column}
+    .carrito-encabezado {padding:20px 18px;border-bottom:1px solid #333}
+    .carrito-encabezado .mini-titulo {margin-bottom:4px;font-size:10px}
+    .carrito-encabezado h3 {font-size:22px}
+    .carrito-en-vivo {font-size:11px;color:#ababa8}
+    .carrito-productos {padding:4px 18px;min-height:95px;overflow:auto;flex:1}
+    .carrito-vacio {padding:22px 0;color:#aaa;font-size:14px}
+    .item-carrito {padding:13px 0;border-bottom:1px solid #333;display:flex;gap:8px;justify-content:space-between;align-items:center}
+    .item-carrito strong {display:block;font-size:14px}
+    .item-carrito small {display:block;color:#a6a6a6;font-size:11px;overflow-wrap:anywhere}
+    .item-carrito .subtotal-linea {color:var(--principal);font-weight:800;white-space:nowrap;font-size:13px}
+    .controles-cantidad {display:flex;align-items:center;gap:7px;margin-top:6px}
+    .controles-cantidad button {background:#303030;color:white;border:1px solid #666;border-radius:7px;min-width:27px;height:26px;cursor:pointer}
+    .carrito-pie {padding:18px;border-top:1px solid #474747;background:#111}
+    .carrito-subtotal {display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:17px;font-weight:800}
+    .carrito-subtotal strong {font-size:24px;color:var(--principal)}
+    .carrito-nota {color:#aaa;font-size:11px;margin:9px 0 14px}
+    .boton-finalizar {border:0;cursor:pointer;width:100%}
+    .barra-carrito-movil {display:none}
+    /* Modal para datos de entrega, separado del carrito permanente */
+    .capa-pedido {display:none;position:fixed;inset:0;z-index:2500;background:#000c;align-items:center;justify-content:center;padding:18px}
+    .capa-pedido.abierta {display:flex}
+    .ventana-pedido {background:rgba(26,26,26,.92);backdrop-filter:blur(22px);border:1px solid #787878;border-radius:22px;padding:24px;width:min(100%,510px);max-height:90vh;overflow-y:auto;box-shadow:0 20px 80px #000}
+    .ventana-titulo {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+    .ventana-titulo h2 {color:var(--principal);font-size:24px}
+    .cerrar-ventana {border:0;background:transparent;color:#fff;font-size:30px;cursor:pointer}
+    .pedido-campo {display:block;margin:12px 0;font-size:14px;font-weight:700}
+    .pedido-campo input,.pedido-campo textarea,.pedido-campo select {display:block;width:100%;margin-top:5px;background:#242424;color:#fff;border:1px solid #555;border-radius:10px;padding:11px;font:inherit}
+    .enviar-pedido {border:0;width:100%;padding:14px;background:#25d366;color:#082d17;font-weight:900;border-radius:12px;cursor:pointer;margin-top:10px}
+    .aviso-pedido {font-size:12px;color:#aaa;margin-top:10px}
+    @media(max-width:950px) {
+      .menu-distribucion{grid-template-columns:minmax(0,1fr) 295px;gap:14px}
+      .plato-linea{align-items:flex-start}
+      .plato-acciones{flex-direction:column;align-items:flex-end;gap:8px}
+      .plato-item{padding:13px 11px}
+    }
+    @media(max-width:720px) {
+      body {padding-bottom:83px}
+      .menu-distribucion {grid-template-columns:1fr}
+      .carrito-lateral {position:static;max-height:none}
+      .carrito-productos {max-height:300px}
+      .barra-carrito-movil {display:flex;position:fixed;z-index:1800;bottom:0;left:0;right:0;min-height:68px;padding:10px 16px;align-items:center;justify-content:space-between;gap:10px;border:0;border-top:2px solid var(--principal);background:#171717;color:#fff;box-shadow:0 -8px 25px #000a;cursor:pointer;font-weight:800}
+      .barra-carrito-movil strong {color:var(--principal)}
+      .whatsapp-flotante {bottom:88px;right:14px;width:49px;height:49px}
+      .categorias-pestanas {flex-wrap:nowrap;overflow-x:auto;padding:4px 2px 15px;scrollbar-width:thin}
+      .pestana-menu {flex-shrink:0}
+      .plato-texto h3 {font-size:17px}
+      .plato-texto p {font-size:12px}
+      .plato-precio {font-size:16px}
+      .elegir-plato {padding:7px 9px;font-size:12px}
+      .plato-acciones {gap:9px}
+      .plato-item.seleccionado {transform:translateY(-5px) scale(1.012)}
+    }
+    @media(prefers-reduced-motion:reduce) {.plato-item,.pestana-menu{transition:none}.plato-item.seleccionado{transform:none}}
+
+  
+    .hero-burger-movil, .hero-texto-movil, .hero-icono-corona,
+    .icono-cta { display: none; }
+    @media (max-width: 720px) {
+      .beneficios { display: none; }
+      .menu-esencial { padding-top: 65px; }
+    }
+
+
+    /* ========================================================
+       INICIO MÓVIL — VERSIÓN 2 CON CARGA VERIFICADA
+       La ilustración conserva la tipografía, los íconos y la foto.
+       Los enlaces HTML se alinean encima de los botones dibujados.
+       Imagen externa: ./imagenes/portada.jpg?v=3
+       Escritorio conserva sus estilos originales.
+       ======================================================== */
+    .carrito-icono-referencia { display: none; }
+
+    @media (max-width: 720px) {
+      body { padding-bottom: max(72px, 18.75vw); }
+
+      /* Primeros 146 píxeles de la referencia: encabezado. */
+      html.portada-cargada header {
+        position: relative;
+        height: 16.898148vw;
+        border: 0;
+        backdrop-filter: none;
+        background: #050505 url("./imagenes/portada.jpg?v=3")
+                    left top / 100vw auto no-repeat;
+      }
+      html.portada-cargada header .nav { width: 100%; height: 100%; min-height: 0; padding: 0; }
+      html.portada-cargada header .logo {
+        position: absolute;
+        left: 4.7%; top: 18%; width: 51%; height: 64%;
+        opacity: 0;
+      }
+      html.portada-cargada header .menu-movil {
+        display: block;
+        position: absolute;
+        right: 3%; top: 12%; width: 12%; height: 75%;
+        padding: 0;
+        font-size: 0;
+        color: transparent;
+      }
+      html.portada-cargada header .nav-links { top: 100%; z-index: 1001; }
+      html.portada-cargada header .menu-movil:focus-visible,
+      html.portada-cargada header .logo:focus-visible {
+        outline: 3px solid #ffce00;
+        outline-offset: -3px;
+        opacity: 1;
+      }
+
+      /* Recorte por CSS: muestra la portada, excluye el carrito de ejemplo. */
+      html.portada-cargada .hero {
+        display: block;
+        height: 142.129630vw;
+        min-height: 0;
+        padding: 0;
+        background: #070707 url("./imagenes/portada.jpg?v=3")
+                    left -16.898148vw / 100vw auto no-repeat;
+      }
+      html.portada-cargada .hero::before, html.portada-cargada .hero::after { display: none; }
+      html.portada-cargada .hero > .contenedor,
+      html.portada-cargada .hero-contenido {
+        position: static;
+        width: 100%; max-width: none;
+        height: 100%; margin: 0; padding: 0;
+      }
+
+      /* Texto accesible: el aspecto visible está en el arte original. */
+      html.portada-cargada .hero-etiqueta, html.portada-cargada .hero h1, html.portada-cargada .hero p {
+        position: absolute;
+        width: 1px; height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        padding: 0; margin: 0; border: 0;
+      }
+      html.portada-cargada .hero-botones { display: contents; }
+      html.portada-cargada .hero-botones a {
+        position: absolute;
+        z-index: 3;
+        display: block;
+        padding: 0; margin: 0; border: 0;
+        background: transparent;
+        box-shadow: none;
+        font-size: 0; color: transparent;
+        transform: none;
+        border-radius: 4.5vw;
+      }
+      html.portada-cargada .hero-botones .boton {
+        left: 6.134259%; top: 48.697068%;
+        width: 41.666667%; height: 6.921824%;
+      }
+      html.portada-cargada .hero-botones .boton-borde {
+        left: 6.134259%; top: 57.491857%;
+        width: 39.699074%; height: 6.677524%;
+      }
+      html.portada-cargada .hero-botones a:focus-visible {
+        outline: 3px solid white;
+        outline-offset: 3px;
+      }
+      html.portada-cargada .hero-botones a:active { background: rgb(255 255 255 / 12%); }
+      html.portada-cargada .hero-botones a:hover { transform: none; background: transparent; }
+      .beneficios { margin-top: 0; }
+      html.portada-cargada body.inicio-visible .whatsapp-flotante { visibility: hidden; }
+
+      /* Carrito real: nunca se utilizan los $42.000 impresos en la foto. */
+      .barra-carrito-movil {
+        display: grid;
+        grid-template-columns: 1.33fr .9fr 1fr;
+        gap: 0;
+        min-height: 72px;
+        height: 18.75vw;
+        padding: 2.8vw 2.7vw 3vw 4.7vw;
+        border-top: 2px solid #efbd29;
+        background: linear-gradient(115deg, #101010, #0d0d0d);
+        box-shadow: none;
+        font-family: Arial, sans-serif;
+        font-size: 3.7vw;
+        font-weight: 700;
+        text-align: left;
+      }
+      .resumen-carrito-movil {
+        display: flex; align-items: center; gap: 3.4vw;
+        min-width: 0; white-space: nowrap;
+      }
+      .carrito-icono-referencia {
+        position: relative;
+        display: inline-flex;
+        width: 6.4vw; flex: 0 0 6.4vw;
+      }
+      .carrito-icono-referencia svg { width: 100%; height: auto; }
+      .carrito-insignia {
+        position: absolute;
+        top: -2.4vw; right: -1.9vw;
+        display: grid; place-items: center;
+        min-width: 4.4vw; height: 4.4vw;
+        padding: 0 .6vw;
+        border-radius: 50%;
+        color: #080808; background: #ffca05;
+        font-size: 2.9vw;
+      }
+      #totalMovil {
+        border-left: 1px solid #666;
+        text-align: center;
+        font-size: 4.4vw;
+        color: #ffc500;
+        white-space: nowrap;
+      }
+      .ver-carrito-movil {
+        display: grid; place-items: center;
+        min-height: 9vw;
+        padding: 1vw;
+        border: 1px solid #e8b932;
+        border-radius: 3.5vw;
+        white-space: nowrap;
+      }
+      .whatsapp-flotante { bottom: calc(max(72px, 18.75vw) + 14px); }
+    }
+
+  </style>
+</head>
+
+
+<body class="inicio-visible">
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+
+  <header>
+
+    <div class="contenedor nav">
+
+      <!-- CAMBIAR NOMBRE DEL CLIENTE -->
+
+      <a href="#inicio" class="logo">
+
+        <div class="logo-icono">
+          🍔
+        </div>
+
+        <div>
+          URBAN <span>BURGER</span>
+        </div>
+
+      </a>
+
+
+      <nav class="nav-links" id="navLinks">
+
+        <a href="#inicio">Inicio</a>
+
+        <a href="#categorias">Categorías</a>
+
+        <a href="#menu">Menú</a>
+
+        <a href="#nosotros">Nosotros</a>
+
+        <a href="#ubicacion">Ubicación</a>
+
+        <a href="#redes">Redes</a>
+
+      </nav>
+
+
+      <button
+        class="menu-movil"
+        id="menuMovil"
+        aria-label="Abrir menú"
+        aria-controls="navLinks"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <!-- ========================================
+         HERO
+         ======================================== -->
+
+    <section class="hero" id="inicio">
+
+
+
+      <div class="contenedor">
+
+        <div class="hero-contenido">
+
+          <div class="hero-etiqueta">
+            <svg class="hero-icono-corona" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7l5 4 5-7 5 7 5-4-2 12H4L2 7Z"/><path d="M4 22h16"/></svg>
+            SABOR ARTESANAL
+          </div>
+
+
+          <!-- CAMBIAR TEXTO PRINCIPAL -->
+
+          <h1>
+            Hechas para
+            <span>disfrutar</span>
+          </h1>
+
+
+          <p class="hero-texto-escritorio">
+            Hamburguesas artesanales, ingredientes frescos
+            y combinaciones creadas para convertir cualquier
+            antojo en una experiencia increíble.
+          </p>
+          <p class="hero-texto-movil">Hamburguesas artesanales,<br>ingredientes frescos y<br>combinaciones únicas.</p>
+
+
+          <div class="hero-botones">
+
+            <a href="#menu" class="boton">
+              <svg class="icono-cta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11V9a8 8 0 0 1 16 0v2"/><path d="M3 11h18v5H3z"/><path d="M5 16v3h14v-3"/><path d="M2 22h20"/></svg> Ver menú ↓
+            </a>
+
+            <a href="#nosotros" class="boton-borde">
+              <svg class="icono-cta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg> Conócenos
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         BENEFICIOS
+         ======================================== -->
+
+    <div class="beneficios">
+
+      <div class="contenedor beneficios-grid">
+
+
+        <div class="beneficio">
+
+          <div class="beneficio-icono">
+            🥬
+          </div>
+
+          <div>
+
+            <h3>
+              Ingredientes frescos
+            </h3>
+
+            <p>
+              Seleccionados para cada preparación.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="beneficio">
+
+          <div class="beneficio-icono">
+            🔥
+          </div>
+
+          <div>
+
+            <h3>
+              Preparado al momento
+            </h3>
+
+            <p>
+              Sabor fresco desde nuestra cocina.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="beneficio">
+
+          <div class="beneficio-icono">
+            ⭐
+          </div>
+
+          <div>
+
+            <h3>
+              Sabor que destaca
+            </h3>
+
+            <p>
+              Recetas pensadas para querer volver.
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- ======================================================
+         MENÚ ESENCIAL INTERACTIVO 3D Y CARRITO PERMANENTE
+         Cambiar productos y precios en el bloque JavaScript PRODUCTOS
+         ====================================================== -->
+    <section class="menu-esencial" id="menu">
+      <div class="contenedor">
+        <div class="cabecera-seccion menu-cabecera">
+          <p class="mini-titulo">Elige, personaliza y disfruta</p>
+          <h2 class="titulo-seccion">Nuestro <span>menú digital</span></h2>
+          <p class="texto-seccion">Explora nuestras recetas, elige tus favoritos y mira tu pedido sumarse en tiempo real.</p>
+        </div>
+        <div class="categorias-pestanas" id="categorias" aria-label="Categorías de productos"></div>
+        <div class="menu-distribucion">
+          <div class="lista-productos" id="listaProductos" aria-live="polite"></div>
+          <aside class="carrito-lateral" id="carritoLateral" aria-label="Tu carrito de compras">
+            <div class="carrito-encabezado">
+              <div><p class="mini-titulo">Tu selección</p><h3>🛒 Mi carrito <span id="cantidadCarrito">(0)</span></h3></div>
+              <span class="carrito-en-vivo">● En tiempo real</span>
+            </div>
+            <div id="listaCarrito" class="carrito-productos"><p class="carrito-vacio">Aún no has elegido productos.</p></div>
+            <div class="carrito-pie">
+              <div class="carrito-subtotal"><span>Subtotal</span><strong id="totalCarrito">$0</strong></div>
+              <p class="carrito-nota">El valor del domicilio se confirma con el restaurante.</p>
+              <button class="boton boton-finalizar" id="botonFinalizar" type="button">Continuar pedido →</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         PROMOCIÓN
+         ======================================== -->
+
+    <section class="promo">
+
+      <div class="contenedor">
+
+        <div class="promo-box">
+
+          <div>
+
+            <p>
+              PROMOCIÓN DESTACADA
+            </p>
+
+            <h2>
+              Combo<br>
+              especial
+            </h2>
+
+            <p>
+              Hamburguesa + papas + bebida
+            </p>
+
+          </div>
+
+
+          <div class="promo-icono">
+            🍔🔥
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         NOSOTROS
+         ======================================== -->
+
+    <section id="nosotros">
+
+      <div class="contenedor nosotros-grid">
+
+
+        <div class="nosotros-img">
+
+          <img
+            src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=85&w=1000&auto=format&fit=crop"
+            alt="Restaurante"
+          >
+
+        </div>
+
+
+        <div class="nosotros-texto">
+
+          <p class="mini-titulo">
+            Nuestra historia
+          </p>
+
+          <h2 class="titulo-seccion">
+            Cocinamos con
+            <span>pasión</span>
+          </h2>
+
+          <p>
+            Urban Burger nació con una idea sencilla:
+            preparar comida deliciosa con ingredientes frescos,
+            buenas porciones y una experiencia que haga
+            querer volver.
+          </p>
+
+          <p>
+            Esta sección está preparada para que cada cliente
+            pueda contar la historia de su restaurante,
+            negocio o emprendimiento.
+          </p>
+
+
+          <a
+            href="#ubicacion"
+            class="boton"
+          >
+            Visítanos
+          </a>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         UBICACIÓN E INFORMACIÓN
+         ======================================== -->
+
+    <section class="info" id="ubicacion">
+
+      <div class="contenedor">
+
+
+        <div class="cabecera-seccion">
+
+          <p class="mini-titulo">
+            Encuéntranos
+          </p>
+
+          <h2 class="titulo-seccion">
+            Estamos cerca de <span>ti</span>
+          </h2>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+          <div class="info-card">
+
+            <div class="info-icono">
+              📍
+            </div>
+
+            <h3>
+              Ubicación
+            </h3>
+
+            <!-- CAMBIAR PARA CADA CLIENTE -->
+
+            <p>
+              Funza, Cundinamarca
+            </p>
+
+          </div>
+
+
+          <div class="info-card">
+
+            <div class="info-icono">
+              🕒
+            </div>
+
+            <h3>
+              Horarios
+            </h3>
+
+            <!-- CAMBIAR PARA CADA CLIENTE -->
+
+            <p>
+              Lunes a domingo<br>
+              12:00 p. m. - 10:00 p. m.
+            </p>
+
+          </div>
+
+
+          <div class="info-card">
+
+            <div class="info-icono">
+              📱
+            </div>
+
+            <h3>
+              Contacto
+            </h3>
+
+            <!-- CAMBIAR PARA CADA CLIENTE -->
+
+            <p>
+              +57 300 123 4567<br>
+              restaurante@email.com
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         REDES SOCIALES
+         ======================================== -->
+
+    <section id="redes">
+
+      <div class="contenedor">
+
+
+        <div class="cabecera-seccion">
+
+          <p class="mini-titulo">
+            Síguenos
+          </p>
+
+          <h2 class="titulo-seccion">
+            Encuéntranos en <span>redes</span>
+          </h2>
+
+          <p class="texto-seccion">
+            Conoce nuestras novedades,
+            promociones y productos.
+          </p>
+
+        </div>
+
+
+        <div class="redes-grid">
+
+
+          <!-- CAMBIAR LINKS PARA CADA CLIENTE -->
+
+          <a
+            class="red-social"
+            href="https://instagram.com"
+            target="_blank"
+          >
+            📸 Instagram
+          </a>
+
+
+          <a
+            class="red-social"
+            href="https://facebook.com"
+            target="_blank"
+          >
+            👍 Facebook
+          </a>
+
+
+          <a
+            class="red-social"
+            href="https://tiktok.com"
+            target="_blank"
+          >
+            🎵 TikTok
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+
+  <footer>
+
+    <div class="contenedor">
+
+
+      <div class="footer-grid">
+
+
+        <div class="footer-col">
+
+          <a href="#inicio" class="logo">
+
+            <div class="logo-icono">
+              🍔
+            </div>
+
+            <div>
+              URBAN <span>BURGER</span>
+            </div>
+
+          </a>
+
+          <p style="margin-top: 18px;">
+            Comida fresca, sabor increíble
+            y una experiencia para repetir.
+          </p>
+
+        </div>
+
+
+        <div class="footer-col">
+
+          <h3>
+            Navegación
+          </h3>
+
+          <a href="#inicio">
+            Inicio
+          </a>
+
+          <a href="#menu">
+            Menú
+          </a>
+
+          <a href="#nosotros">
+            Nosotros
+          </a>
+
+          <a href="#ubicacion">
+            Ubicación
+          </a>
+
+        </div>
+
+
+        <div class="footer-col">
+
+          <h3>
+            Menú
+          </h3>
+
+          <a href="#menu">
+            Hamburguesas
+          </a>
+
+          <a href="#menu">
+            Bebidas
+          </a>
+
+          <a href="#menu">
+            Entradas
+          </a>
+
+          <a href="#menu">
+            Postres
+          </a>
+
+        </div>
+
+
+        <div class="footer-col">
+
+          <h3>
+            Contacto
+          </h3>
+
+          <!-- CAMBIAR -->
+
+          <p>
+            📞 +57 300 123 4567
+          </p>
+
+          <p>
+            📍 Funza, Cundinamarca
+          </p>
+
+          <p>
+            ✉ restaurante@email.com
+          </p>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="copyright">
+
+        © 2026 Urban Burger · Todos los derechos reservados
+
+      </div>
+
+
+    </div>
+
+  </footer>
+
+
+  <!-- ========================================
+       WHATSAPP FLOTANTE
+       CAMBIAR NÚMERO
+       ======================================== -->
+
+  <a
+    class="whatsapp-flotante"
+    href="https://wa.me/573144073259"
+    target="_blank"
+    aria-label="WhatsApp"
+  >
+    ☎
+  </a>
+
+
+  <!-- ========================================
+       JAVASCRIPT
+       SOLO PARA MENÚ DE CELULAR
+       ======================================== -->
+
+  <script>
+
+    const botonMenu = document.getElementById("menuMovil");
+
+    const navegacion = document.getElementById("navLinks");
+
+
+    botonMenu.addEventListener("click", () => {
+
+      const abierto = navegacion.classList.toggle("activo");
+      botonMenu.setAttribute("aria-expanded", String(abierto));
+
+    });
+
+
+    const linksMenu = document.querySelectorAll(".nav-links a");
+
+
+    linksMenu.forEach(link => {
+
+      link.addEventListener("click", () => {
+
+        navegacion.classList.remove("activo");
+        botonMenu.setAttribute("aria-expanded", "false");
+
+      });
+
+    });
+
+  </script>
+
+
+  <!-- ======================================================
+       RESUMEN FIJO EN CELULARES - visible durante toda la navegación
+       ====================================================== -->
+  <button class="barra-carrito-movil" id="barraCarritoMovil" type="button" aria-label="Ir al carrito">
+    <span class="resumen-carrito-movil">
+      <span class="carrito-icono-referencia" aria-hidden="true">
+        <svg viewBox="0 0 56 54" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 5h7l8 32h29l7-24H12M17 37l-2 6h31" />
+          <circle cx="20" cy="49" r="3" /><circle cx="43" cy="49" r="3" />
+        </svg>
+        <span class="carrito-insignia" id="insigniaMovil">0</span>
+      </span>
+      <span><span id="cantidadMovil">0</span> <span id="palabraProductosMovil">productos</span></span>
+    </span>
+    <strong id="totalMovil">$0</strong>
+    <span class="ver-carrito-movil">Ver carrito ↑</span>
+  </button>
+
+  <!-- ======================================================
+       VENTANA GLASS - DATOS DEL PEDIDO
+       ====================================================== -->
+  <div class="capa-pedido" id="capaPedido">
+    <div class="ventana-pedido" role="dialog" aria-modal="true" aria-label="Finalizar tu pedido">
+      <div class="ventana-titulo"><h2>🛒 Finalizar pedido</h2><button type="button" class="cerrar-ventana" id="cerrarPedido" aria-label="Cerrar">×</button></div>
+      <p id="resumenVentana" style="color:#ddd;font-size:14px"></p>
+      <form id="formularioPedido">
+        <label class="pedido-campo">Nombre completo *<input name="nombre" required maxlength="100" autocomplete="name"></label>
+        <label class="pedido-campo">Teléfono *<input name="telefono" type="tel" required maxlength="25" autocomplete="tel"></label>
+        <label class="pedido-campo">Tipo de entrega<select name="entrega" id="entregaPedido"><option>Domicilio</option><option>Recoger en el local</option></select></label>
+        <label class="pedido-campo" id="campoDireccion">Dirección *<input name="direccion" id="direccionPedido" required maxlength="180" autocomplete="street-address"></label>
+        <label class="pedido-campo">Medio de pago *<select name="pago" required><option value="">Seleccionar</option><option>Efectivo</option><option>Transferencia</option><option>Datáfono (consultar)</option></select></label>
+        <label class="pedido-campo">Observaciones generales<textarea name="notas" rows="2" maxlength="300" placeholder="Indicaciones para todo el pedido"></textarea></label>
+        <button type="submit" class="enviar-pedido">✅ Pedir por WhatsApp</button>
+        <p class="aviso-pedido">Se abrirá WhatsApp con el pedido listo. Debes pulsar Enviar para confirmarlo con el restaurante. Domicilio por confirmar.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  /* ========================================================
+     CONFIGURACIÓN - CAMBIAR POR CADA RESTAURANTE
+     Número conservado del sistema original del archivo recibido.
+     ======================================================== */
+  (() => {
+    const WHATSAPP = "573144073259";
+    const RESTAURANTE = "URBAN BURGER";
+
+    /* ========================================================
+       PRODUCTOS - NOMBRE, RECETA, PRECIO Y CATEGORÍA
+       12 productos conservados del HTML original.
+       Para añadir platos, copiar un objeto y cambiar sus datos.
+       ======================================================== */
+    const PRODUCTOS = [
+    {
+        "id": "1",
+        "categoria": "Hamburguesas",
+        "nombre": "Burger Clásica",
+        "descripcion": "Carne artesanal, queso cheddar,\n                vegetales frescos y salsa especial.",
+        "precio": 18000
+    },
+    {
+        "id": "2",
+        "categoria": "Hamburguesas",
+        "nombre": "Burger Doble",
+        "descripcion": "Doble carne, doble queso,\n                tocineta y salsa de la casa.",
+        "precio": 24000
+    },
+    {
+        "id": "3",
+        "categoria": "Hamburguesas",
+        "nombre": "Burger Especial",
+        "descripcion": "Carne artesanal, queso,\n                cebolla caramelizada y salsa premium.",
+        "precio": 22000
+    },
+    {
+        "id": "4",
+        "categoria": "Bebidas",
+        "nombre": "Limonada Natural",
+        "descripcion": "Preparada al momento\n                con limón fresco y hielo.",
+        "precio": 7000
+    },
+    {
+        "id": "5",
+        "categoria": "Bebidas",
+        "nombre": "Gaseosa",
+        "descripcion": "Diferentes sabores\n                para acompañar tu comida.",
+        "precio": 5000
+    },
+    {
+        "id": "6",
+        "categoria": "Bebidas",
+        "nombre": "Bebida Especial",
+        "descripcion": "Refrescante mezcla\n                preparada especialmente para la casa.",
+        "precio": 9000
+    },
+    {
+        "id": "7",
+        "categoria": "Entradas",
+        "nombre": "Papas Clásicas",
+        "descripcion": "Papas crocantes\n                recién preparadas.",
+        "precio": 8000
+    },
+    {
+        "id": "8",
+        "categoria": "Entradas",
+        "nombre": "Papas Especiales",
+        "descripcion": "Papas con queso,\n                salsa especial y toppings.",
+        "precio": 13000
+    },
+    {
+        "id": "9",
+        "categoria": "Entradas",
+        "nombre": "Pollo Crunch",
+        "descripcion": "Pollo crocante\n                acompañado de salsa de la casa.",
+        "precio": 16000
+    },
+    {
+        "id": "10",
+        "categoria": "Postres",
+        "nombre": "Torta de Chocolate",
+        "descripcion": "Porción suave y chocolatosa,\n                perfecta para cerrar.",
+        "precio": 10000
+    },
+    {
+        "id": "11",
+        "categoria": "Postres",
+        "nombre": "Postre de la Casa",
+        "descripcion": "Una preparación especial\n                que cambia según disponibilidad.",
+        "precio": 12000
+    },
+    {
+        "id": "12",
+        "categoria": "Postres",
+        "nombre": "Dulce Especial",
+        "descripcion": "Preparación dulce\n                perfecta para acompañar una bebida.",
+        "precio": 9000
+    }
+];
+    const ICONOS = {Hamburguesas:"🍔", Bebidas:"🥤", Entradas:"🍟", Postres:"🍰"};
+    const formato = valor => "$" + Number(valor).toLocaleString("es-CO");
+    const carrito = new Map();
+    let categoriaActual = "Hamburguesas";
+    let elegido = null;
+
+    /* ========================================================
+       GUARDAR Y RECUPERAR EL CARRITO
+       ======================================================== */
+    try {
+      const guardado = JSON.parse(localStorage.getItem("urban-burger-esencial-carrito") || "[]");
+      if(Array.isArray(guardado)) guardado.forEach(x => {
+        if(PRODUCTOS.some(p=>p.id===x.id) && Number.isInteger(x.cantidad) && x.cantidad>0 && x.cantidad<=100) {
+          const key = `${x.id}||${x.nota || ""}`;
+          carrito.set(key,{id:x.id,nota:String(x.nota||"").slice(0,180),cantidad:x.cantidad});
+        }
+      });
+    } catch(err) { console.warn("No se pudo recuperar el carrito",err); }
+    const guardar = () => {
+      try { localStorage.setItem("urban-burger-esencial-carrito",JSON.stringify([...carrito.values()])); } catch(err) {}
+    };
+
+    /* ========================================================
+       CATEGORÍAS ACTIVAS - BORDE QUE CAMBIA DE COLOR
+       ======================================================== */
+    const contenedorPestanas = document.getElementById("categorias");
+    const contenedorProductos = document.getElementById("listaProductos");
+    [...new Set(PRODUCTOS.map(p=>p.categoria))].forEach(cat=>{
+      const boton=document.createElement("button");
+      boton.type="button";boton.className="pestana-menu";
+      boton.textContent=`${ICONOS[cat]||"🍽️"}  ${cat}`;
+      boton.dataset.categoria=cat;
+      boton.addEventListener("click",()=>{
+        categoriaActual=cat;elegido=null;renderizarMenu();
+      });
+      contenedorPestanas.append(boton);
+    });
+
+    /* ========================================================
+       PLATOS 3D - CLIC LEVANTA TARJETA Y MUESTRA DESCRIPCIÓN
+       ======================================================== */
+    function renderizarMenu() {
+      contenedorPestanas.querySelectorAll("button").forEach(b=>{
+        const activo=b.dataset.categoria===categoriaActual;
+        b.classList.toggle("activa",activo);
+        b.setAttribute("aria-pressed",String(activo));
+      });
+      contenedorProductos.replaceChildren();
+      PRODUCTOS.filter(p=>p.categoria===categoriaActual).forEach(p=>{
+        const tarjeta=document.createElement("article");
+        tarjeta.className="plato-item"+(elegido===p.id?" seleccionado":"");
+        const fila=document.createElement("div");fila.className="plato-linea";
+        const texto=document.createElement("div");texto.className="plato-texto";
+        const titulo=document.createElement("h3");titulo.textContent=p.nombre;
+        const receta=document.createElement("p");receta.textContent=p.descripcion;
+        texto.append(titulo,receta);
+        const acciones=document.createElement("div");acciones.className="plato-acciones";
+        const precio=document.createElement("span");precio.className="plato-precio";precio.textContent=formato(p.precio);
+        const elegir=document.createElement("button");elegir.className="elegir-plato";elegir.type="button";
+        elegir.textContent=elegido===p.id?"Elegido ✓":"Elegir +";
+        elegir.setAttribute("aria-expanded",String(elegido===p.id));
+        elegir.addEventListener("click",()=>{elegido=elegido===p.id?null:p.id;renderizarMenu();});
+        acciones.append(precio,elegir);fila.append(texto,acciones);tarjeta.append(fila);
+        const detalles=document.createElement("div");detalles.className="detalle-plato";
+        const label=document.createElement("label");label.textContent="¿Alguna indicación para este plato?";
+        const nota=document.createElement("textarea");nota.placeholder="Ejemplo: sin cebolla, salsa aparte";nota.maxLength=180;
+        label.append(nota);
+        const filaAcciones=document.createElement("div");filaAcciones.className="detalle-acciones";
+        const indicacion=document.createElement("span");indicacion.style.cssText="font-size:12px;color:#aaa";indicacion.textContent="Personaliza antes de agregar";
+        const agregar=document.createElement("button");agregar.type="button";agregar.className="sumar-plato";agregar.textContent="🛒 Agregar al carrito";
+        agregar.addEventListener("click",()=>{
+          const n=nota.value.trim();const key=`${p.id}||${n}`;
+          const anterior=carrito.get(key);
+          carrito.set(key,{id:p.id,nota:n,cantidad:(anterior?.cantidad||0)+1});
+          guardar();actualizarCarrito();volarAlCarrito(agregar);
+          agregar.textContent="✓ Agregado";
+          setTimeout(()=>{elegido=null;renderizarMenu();},450);
+        });
+        filaAcciones.append(indicacion,agregar);detalles.append(label,filaAcciones);tarjeta.append(detalles);
+        contenedorProductos.append(tarjeta);
+      });
+    }
+
+    /* ========================================================
+       CARRITO PERMANENTE - SIEMPRE A LA VISTA EN PC
+       ======================================================== */
+    const lista=document.getElementById("listaCarrito");
+    function modificar(key,delta) {
+      const item=carrito.get(key);if(!item)return;
+      item.cantidad+=delta;
+      if(item.cantidad<=0)carrito.delete(key);
+      guardar();actualizarCarrito();
+    }
+    function actualizarCarrito() {
+      lista.replaceChildren();let cantidad=0,total=0;
+      if(!carrito.size){const vacio=document.createElement("p");vacio.className="carrito-vacio";vacio.textContent="Aún no has elegido productos.";lista.append(vacio);}
+      carrito.forEach((item,key)=>{
+        const p=PRODUCTOS.find(x=>x.id===item.id);if(!p)return;
+        cantidad+=item.cantidad;total+=p.precio*item.cantidad;
+        const fila=document.createElement("div");fila.className="item-carrito";
+        const izquierda=document.createElement("div");izquierda.style.minWidth="0";
+        const nombre=document.createElement("strong");nombre.textContent=p.nombre;
+        const nota=document.createElement("small");nota.textContent=item.nota||"";
+        const controles=document.createElement("div");controles.className="controles-cantidad";
+        const menos=document.createElement("button");menos.type="button";menos.textContent="−";menos.setAttribute("aria-label",`Quitar ${p.nombre}`);menos.onclick=()=>modificar(key,-1);
+        const numero=document.createElement("span");numero.textContent=item.cantidad;
+        const mas=document.createElement("button");mas.type="button";mas.textContent="+";mas.setAttribute("aria-label",`Agregar otro ${p.nombre}`);mas.onclick=()=>modificar(key,1);
+        controles.append(menos,numero,mas);izquierda.append(nombre,nota,controles);
+        const subtotal=document.createElement("span");subtotal.className="subtotal-linea";subtotal.textContent=formato(p.precio*item.cantidad);
+        fila.append(izquierda,subtotal);lista.append(fila);
+      });
+      document.getElementById("cantidadCarrito").textContent=`(${cantidad})`;
+      document.getElementById("totalCarrito").textContent=formato(total);
+      document.getElementById("cantidadMovil").textContent=cantidad;
+      document.getElementById("insigniaMovil").textContent=cantidad;
+      document.getElementById("palabraProductosMovil").textContent=cantidad===1?"producto":"productos";
+      document.getElementById("totalMovil").textContent=formato(total);
+      document.getElementById("resumenVentana").textContent=`${cantidad} producto(s) · Subtotal ${formato(total)}`;
+    }
+
+    /* ========================================================
+       ANIMACIÓN DE PRODUCTO QUE VUELA AL CARRITO
+       ======================================================== */
+    function volarAlCarrito(origen) {
+      if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+      const destino=innerWidth<=720?document.getElementById("barraCarritoMovil"):document.getElementById("carritoLateral");
+      const a=origen.getBoundingClientRect(),b=destino.getBoundingClientRect();
+      const icono=document.createElement("div");icono.textContent="🛒";
+      icono.style.cssText=`position:fixed;left:${a.left+a.width/2-19}px;top:${a.top}px;z-index:3000;pointer-events:none;font-size:33px`;
+      document.body.append(icono);
+      const dx=(b.left+b.width/2)-(a.left+a.width/2),dy=(b.top+b.height/2)-a.top;
+      icono.animate([{transform:"translate(0,0) scale(1)",opacity:1},{transform:`translate(${dx*.5}px,${dy*.5-70}px) scale(.85)`,opacity:1},{transform:`translate(${dx}px,${dy}px) scale(.2)`,opacity:0}],{duration:650,easing:"ease-in-out"}).finished.finally(()=>icono.remove());
+    }
+
+    /* ========================================================
+       FINALIZAR PEDIDO Y ENVIAR A WHATSAPP
+       ======================================================== */
+    const capa=document.getElementById("capaPedido");
+    const abrir=()=>{
+      if(!carrito.size){alert("Agrega un producto antes de continuar.");return;}
+      actualizarCarrito();capa.classList.add("abierta");document.getElementById("cerrarPedido").focus();
+    };
+    const cerrar=()=>capa.classList.remove("abierta");
+    document.getElementById("botonFinalizar").addEventListener("click",abrir);
+    document.getElementById("barraCarritoMovil").addEventListener("click",()=>{
+      document.getElementById("carritoLateral").scrollIntoView({behavior:"smooth",block:"center"});
+    });
+    document.getElementById("cerrarPedido").addEventListener("click",cerrar);
+    capa.addEventListener("click",e=>{if(e.target===capa)cerrar()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")cerrar()});
+    const entrega=document.getElementById("entregaPedido"),direccion=document.getElementById("direccionPedido"),campo=document.getElementById("campoDireccion");
+    entrega.addEventListener("change",()=>{const domicilio=entrega.value==="Domicilio";campo.hidden=!domicilio;direccion.required=domicilio;});
+    document.getElementById("formularioPedido").addEventListener("submit",e=>{
+      e.preventDefault();if(!carrito.size){alert("El carrito está vacío.");return;}
+      const d=new FormData(e.currentTarget),lineas=[];let total=0;
+      carrito.forEach(item=>{
+        const p=PRODUCTOS.find(x=>x.id===item.id);if(!p)return;
+        const subtotal=p.precio*item.cantidad;total+=subtotal;
+        lineas.push(`${item.cantidad} x ${p.nombre}: ${formato(subtotal)}${item.nota?`\n   Nota: ${item.nota}`:""}`);
+      });
+      const mensaje=[`🍔 *NUEVO PEDIDO - ${RESTAURANTE}*`,"","*PRODUCTOS*",...lineas,"",`*Subtotal:* ${formato(total)}`,"*Domicilio:* Por confirmar","",`*Nombre:* ${d.get("nombre")}`,`*Teléfono:* ${d.get("telefono")}`,`*Entrega:* ${d.get("entrega")}`,...(d.get("entrega")==="Domicilio"?[`*Dirección:* ${d.get("direccion")}`]:[]),`*Pago:* ${d.get("pago")}`,`*Observaciones:* ${d.get("notas")||"Ninguna"}`,"","Por favor confirma disponibilidad y total final. ¡Gracias!"].join("\n");
+      window.location.href=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+    });
+    const enlaceContacto=document.querySelector(".whatsapp-flotante");
+    if(enlaceContacto)enlaceContacto.href=`https://wa.me/${WHATSAPP}`;
+    renderizarMenu();actualizarCarrito();
+  })();
+  </script>
+
+  <!-- Evita tapar la portada con el botón flotante de WhatsApp. -->
+  <script>
+    if ('IntersectionObserver' in window) {
+      const observadorInicio = new IntersectionObserver(([entrada]) => {
+        document.body.classList.toggle('inicio-visible', entrada.isIntersecting);
+      });
+      observadorInicio.observe(document.getElementById('inicio'));
+    } else {
+      document.body.classList.remove('inicio-visible');
+    }
+  </script>
+
+  <!-- ========================================================
+       CARGA SEGURA DE PORTADA
+       La imagen está en imagenes/portada.jpg, según el repositorio actual.
+       La composición se activa solo cuando la imagen cargó bien.
+       Si falta la imagen, los textos y botones siguen visibles.
+       ======================================================== -->
+  <script id="cargaPortadaMovil">
+    (() => {
+      const pantallaMovil = window.matchMedia('(max-width: 720px)');
+      let cargaIniciada = false;
+
+      function cargarPortada() {
+        if (!pantallaMovil.matches || cargaIniciada) return;
+        cargaIniciada = true;
+        const portada = new Image();
+        portada.onload = () => {
+          if (portada.naturalWidth > 0 && portada.naturalHeight > 0) {
+            document.documentElement.classList.add('portada-cargada');
+          }
+        };
+        portada.onerror = () => {
+          cargaIniciada = false;
+          document.documentElement.classList.remove('portada-cargada');
+          console.warn('No se encontró imagenes/portada.jpg. Se mantiene el inicio con textos y botones visibles.');
+        };
+        portada.src = './imagenes/portada.jpg?v=3';
+      }
+
+      cargarPortada();
+      if (pantallaMovil.addEventListener) {
+        pantallaMovil.addEventListener('change', cargarPortada);
+      } else {
+        pantallaMovil.addListener(cargarPortada);
+      }
+    })();
+  </script>
+
+</body>
+</html>
